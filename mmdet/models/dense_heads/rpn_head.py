@@ -9,7 +9,6 @@ from mmcv.ops import batched_nms
 
 from ..builder import HEADS
 from .anchor_head import AnchorHead
-from ..utils import ConvModule_Norm
 
 
 @HEADS.register_module()
@@ -44,12 +43,11 @@ class RPNHead(AnchorHead):
                 # needed for gradient computation has been modified by an
                 # inplace operation.
                 rpn_convs.append(
-                    ConvModule_Norm(
+                    ConvModule(
                         in_channels,
                         self.feat_channels,
                         3,
                         padding=1,
-                        norm_cfg=self.norm_cfg,
                         inplace=False))
             self.rpn_conv = nn.Sequential(*rpn_convs)
         else:

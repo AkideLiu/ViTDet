@@ -1,113 +1,207 @@
-<h1 align="left">Unofficial PyTorch Implementation of Exploring Plain Vision Transformer Backbones for Object Detection<a href="https://arxiv.org/abs/2203.16527"><img src="https://img.shields.io/badge/arXiv-Paper-<COLOR>.svg" ></a></h1> 
+<div align="center">
+  <img src="resources/mmdet-logo.png" width="600"/>
 
-<p align="center">
-  <a href="#Results">Results</a> |
-  <a href="#Updates">Updates</a> |
-  <a href="#Usage">Usage</a> |
-  <a href='#Todo'>Todo</a> |
-  <a href="#Acknowledge">Acknowledge</a>
-</p>
 
-This branch contains the **unofficial** pytorch implementation of <a href="https://arxiv.org/abs/2203.16527">Exploring Plain Vision Transformer Backbones for Object Detection</a>. Thanks for their wonderful work!
+[![PyPI](https://img.shields.io/pypi/v/mmdet)](https://pypi.org/project/mmdet)
+[![docs](https://img.shields.io/badge/docs-latest-blue)](https://mmdetection.readthedocs.io/en/latest/)
+[![badge](https://github.com/open-mmlab/mmdetection/workflows/build/badge.svg)](https://github.com/open-mmlab/mmdetection/actions)
+[![codecov](https://codecov.io/gh/open-mmlab/mmdetection/branch/master/graph/badge.svg)](https://codecov.io/gh/open-mmlab/mmdetection)
+[![license](https://img.shields.io/github/license/open-mmlab/mmdetection.svg)](https://github.com/open-mmlab/mmdetection/blob/master/LICENSE)
+[![open issues](https://isitmaintained.com/badge/open/open-mmlab/mmdetection.svg)](https://github.com/open-mmlab/mmdetection/issues)
 
-## Results from this repo on COCO
 
-The models are trained on 4 A100 machines with 2 images per gpu, which makes a batch size of 64 during training.
+  <img src="https://user-images.githubusercontent.com/12907710/137271636-56ba1cd2-b110-4812-8221-b4c120320aa9.png"/>
 
-| Model | Pretrain | Machine | FrameWork | Box mAP | Mask mAP | config | log | weight |
-| :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | :----: | 
-| ViT-Base | IN1K+MAE | TPU | Mask RCNN | 51.1 | 45.5 | [config](./configs/ViTDet/ViTDet-ViT-Base-100e.py) | [log](logs/ViT-Base-TPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQuegyG-Z3FH2LDP?e=9ij98g) |
-| ViT-Base | IN1K+MAE | GPU | Mask RCNN | 51.1 | 45.4 | [config](./configs/ViTDet/ViTDet-ViT-Base-100e.py) | [log](logs/ViT-Base-GPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgRA7Y9s2rA5NC4wn?e=QfpKJf) |
-| [ViTAE-Base](https://arxiv.org/abs/2202.10108) | IN1K+MAE | GPU | Mask RCNN | 51.6 | 45.8 | [config](configs/ViTDet/ViTDet-ViTAE-Base-100e.py) | [log](logs/ViTAE-Base-GPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQ--Ez4mzEnO-G5Y?e=ACfLxC) |
-| [ViTAE-Small](https://arxiv.org/abs/2202.10108) | IN1K+Sup | GPU | Mask RCNN | 45.6 | 40.1 | [config](configs/ViTDet/ViTDet-ViTAE-Small-100e.py) | [log](logs/ViTAE-S-GPU.log.json) | [OneDrive](https://1drv.ms/u/s!AimBgYV7JjTlgQ7PorGY53K6gIGd?e=lw81U5) |
 
-## Updates
+[📘Documentation](https://mmdetection.readthedocs.io/en/v2.18.0/) |
+[🛠️Installation](https://mmdetection.readthedocs.io/en/v2.18.0/get_started.html) |
+[👀Model Zoo](https://mmdetection.readthedocs.io/zh_CN/v2.18.0/model_zoo.html) |
+[🆕Update News](https://mmdetection.readthedocs.io/en/v2.18.0/changelog.html) |
+[🚀Ongoing Projects](https://github.com/open-mmlab/mmdetection/projects) |
+[🤔Reporting Issues](https://github.com/open-mmlab/mmdetection/issues/new/choose)
 
-> [2022-04-18] Explore using small 1K supervised trained models (20M parameters) for ViTDet (**45.6 mAP**). The results with multi-stage structure is **46.0 mAP** for [Swin-T](https://github.com/SwinTransformer/Swin-Transformer-Object-Detection) and **47.8 mAP** for [ViTAEv2-S](https://github.com/ViTAE-Transformer/ViTAE-Transformer/tree/main/Object-Detection) with Mask RCNN on COCO.
+</div>
 
-> [2022-04-17] Release the pretrained weights and logs for ViT-B and ViTAE-B on MS COCO. The models are totally trained with PyTorch on GPU.
+## Introduction
 
-> [2022-04-16] Release the initial unofficial implementation of ViTDet with ViT-Base model! It obtains 51.1 mAP and 45.5 mAP on detection and segmentation, respectively. The weights and logs will be uploaded soon. 
+English | [简体中文](README_zh-CN.md)
 
-> Applications of ViTAE Transformer include: [image classification](https://github.com/ViTAE-Transformer/ViTAE-Transformer/tree/main/Image-Classification) | [object detection](https://github.com/ViTAE-Transformer/ViTAE-Transformer/tree/main/Object-Detection) | [semantic segmentation](https://github.com/ViTAE-Transformer/ViTAE-Transformer/tree/main/Semantic-Segmentation) | [animal pose segmentation](https://github.com/ViTAE-Transformer/ViTAE-Transformer/tree/main/Animal-Pose-Estimation) | [remote sensing](https://github.com/ViTAE-Transformer/ViTAE-Transformer-Remote-Sensing) | [matting](https://github.com/ViTAE-Transformer/ViTAE-Transformer-Matting)
+MMDetection is an open source object detection toolbox based on PyTorch. It is
+a part of the [OpenMMLab](https://openmmlab.com/) project.
 
-## Usage
+The master branch works with **PyTorch 1.3+**.
 
-We use PyTorch 1.9.0 or NGC docker 21.06, and mmcv 1.3.9 for the experiments.
-```bash
-git clone https://github.com/open-mmlab/mmcv.git
-cd mmcv
-git checkout v1.3.9
-MMCV_WITH_OPS=1 pip install -e .
-cd ..
-git clone https://github.com/ViTAE-Transformer/ViTDet.git
-cd ViTDet
-pip install -v -e .
+<details open>
+<summary>Major features</summary>
+
+- **Modular Design**
+
+  We decompose the detection framework into different components and one can easily construct a customized object detection framework by combining different modules.
+
+- **Support of multiple frameworks out of box**
+
+  The toolbox directly supports popular and contemporary detection frameworks, *e.g.* Faster RCNN, Mask RCNN, RetinaNet, etc.
+
+- **High efficiency**
+
+  All basic bbox and mask operations run on GPUs. The training speed is faster than or comparable to other codebases, including [Detectron2](https://github.com/facebookresearch/detectron2), [maskrcnn-benchmark](https://github.com/facebookresearch/maskrcnn-benchmark) and [SimpleDet](https://github.com/TuSimple/simpledet).
+
+- **State of the art**
+
+  The toolbox stems from the codebase developed by the *MMDet* team, who won [COCO Detection Challenge](http://cocodataset.org/#detection-leaderboard) in 2018, and we keep pushing it forward.
+</details>
+
+
+Apart from MMDetection, we also released a library [mmcv](https://github.com/open-mmlab/mmcv) for computer vision research, which is heavily depended on by this toolbox.
+
+## License
+
+This project is released under the [Apache 2.0 license](LICENSE).
+
+## Changelog
+
+**2.18.0** was released in 27/10/2021:
+- Support [QueryInst](http://arxiv.org/abs/2105.01928).
+- Refactor dense_head to decouple onnx export from get_bboxes and speed up inference time.
+- Support infinite sampler to accelerate training when using iter based runner.
+
+Please refer to [changelog.md](docs/changelog.md) for details and release history.
+
+For compatibility changes between different versions of MMDetection, please refer to [compatibility.md](docs/compatibility.md).
+
+## Benchmark and model zoo
+
+Results and models are available in the [model zoo](docs/model_zoo.md).
+
+
+<details open>
+<summary>Supported backbones:</summary>
+
+- [x] ResNet (CVPR'2016)
+- [x] ResNeXt (CVPR'2017)
+- [x] VGG (ICLR'2015)
+- [x] MobileNetV2 (CVPR'2018)
+- [x] HRNet (CVPR'2019)
+- [x] RegNet (CVPR'2020)
+- [x] Res2Net (TPAMI'2020)
+- [x] ResNeSt (ArXiv'2020)
+- [X] Swin (CVPR'2021)
+- [x] PVT (ICCV'2021)
+- [x] PVTv2 (ArXiv'2021)
+</details>
+
+<details open>
+<summary>Supported methods:</summary>
+
+- [x] [RPN (NeurIPS'2015)](configs/rpn)
+- [x] [Fast R-CNN (ICCV'2015)](configs/fast_rcnn)
+- [x] [Faster R-CNN (NeurIPS'2015)](configs/faster_rcnn)
+- [x] [Mask R-CNN (ICCV'2017)](configs/mask_rcnn)
+- [x] [Cascade R-CNN (CVPR'2018)](configs/cascade_rcnn)
+- [x] [Cascade Mask R-CNN (CVPR'2018)](configs/cascade_rcnn)
+- [x] [SSD (ECCV'2016)](configs/ssd)
+- [x] [RetinaNet (ICCV'2017)](configs/retinanet)
+- [x] [GHM (AAAI'2019)](configs/ghm)
+- [x] [Mask Scoring R-CNN (CVPR'2019)](configs/ms_rcnn)
+- [x] [Double-Head R-CNN (CVPR'2020)](configs/double_heads)
+- [x] [Hybrid Task Cascade (CVPR'2019)](configs/htc)
+- [x] [Libra R-CNN (CVPR'2019)](configs/libra_rcnn)
+- [x] [Guided Anchoring (CVPR'2019)](configs/guided_anchoring)
+- [x] [FCOS (ICCV'2019)](configs/fcos)
+- [x] [RepPoints (ICCV'2019)](configs/reppoints)
+- [x] [Foveabox (TIP'2020)](configs/foveabox)
+- [x] [FreeAnchor (NeurIPS'2019)](configs/free_anchor)
+- [x] [NAS-FPN (CVPR'2019)](configs/nas_fpn)
+- [x] [ATSS (CVPR'2020)](configs/atss)
+- [x] [FSAF (CVPR'2019)](configs/fsaf)
+- [x] [PAFPN (CVPR'2018)](configs/pafpn)
+- [x] [Dynamic R-CNN (ECCV'2020)](configs/dynamic_rcnn)
+- [x] [PointRend (CVPR'2020)](configs/point_rend)
+- [x] [CARAFE (ICCV'2019)](configs/carafe/README.md)
+- [x] [DCNv2 (CVPR'2019)](configs/dcn/README.md)
+- [x] [Group Normalization (ECCV'2018)](configs/gn/README.md)
+- [x] [Weight Standardization (ArXiv'2019)](configs/gn+ws/README.md)
+- [x] [OHEM (CVPR'2016)](configs/faster_rcnn/faster_rcnn_r50_fpn_ohem_1x_coco.py)
+- [x] [Soft-NMS (ICCV'2017)](configs/faster_rcnn/faster_rcnn_r50_fpn_soft_nms_1x_coco.py)
+- [x] [Generalized Attention (ICCV'2019)](configs/empirical_attention/README.md)
+- [x] [GCNet (ICCVW'2019)](configs/gcnet/README.md)
+- [x] [Mixed Precision (FP16) Training (ArXiv'2017)](configs/fp16/README.md)
+- [x] [InstaBoost (ICCV'2019)](configs/instaboost/README.md)
+- [x] [GRoIE (ICPR'2020)](configs/groie/README.md)
+- [x] [DetectoRS (ArXiv'2020)](configs/detectors/README.md)
+- [x] [Generalized Focal Loss (NeurIPS'2020)](configs/gfl/README.md)
+- [x] [CornerNet (ECCV'2018)](configs/cornernet/README.md)
+- [x] [Side-Aware Boundary Localization (ECCV'2020)](configs/sabl/README.md)
+- [x] [YOLOv3 (ArXiv'2018)](configs/yolo/README.md)
+- [x] [PAA (ECCV'2020)](configs/paa/README.md)
+- [x] [YOLACT (ICCV'2019)](configs/yolact/README.md)
+- [x] [CentripetalNet (CVPR'2020)](configs/centripetalnet/README.md)
+- [x] [VFNet (ArXiv'2020)](configs/vfnet/README.md)
+- [x] [DETR (ECCV'2020)](configs/detr/README.md)
+- [x] [Deformable DETR (ICLR'2021)](configs/deformable_detr/README.md)
+- [x] [CascadeRPN (NeurIPS'2019)](configs/cascade_rpn/README.md)
+- [x] [SCNet (AAAI'2021)](configs/scnet/README.md)
+- [x] [AutoAssign (ArXiv'2020)](configs/autoassign/README.md)
+- [x] [YOLOF (CVPR'2021)](configs/yolof/README.md)
+- [x] [Seasaw Loss (CVPR'2021)](configs/seesaw_loss/README.md)
+- [x] [CenterNet (CVPR'2019)](configs/centernet/README.md)
+- [x] [YOLOX (ArXiv'2021)](configs/yolox/README.md)
+- [x] [SOLO (ECCV'2020)](configs/solo/README.md)
+- [x] [QueryInst (ICCV'2021)](configs/queryinst/README.md)
+</details>
+
+Some other methods are also supported in [projects using MMDetection](./docs/projects.md).
+
+## Installation
+
+Please refer to [get_started.md](docs/get_started.md) for installation.
+
+## Getting Started
+
+Please see [get_started.md](docs/get_started.md) for the basic usage of MMDetection.
+We provide [colab tutorial](demo/MMDet_Tutorial.ipynb), and full guidance for quick run [with existing dataset](docs/1_exist_data_model.md) and [with new dataset](docs/2_new_data_model.md) for beginners.
+There are also tutorials for [finetuning models](docs/tutorials/finetune.md), [adding new dataset](docs/tutorials/customize_dataset.md), [designing data pipeline](docs/tutorials/data_pipeline.md), [customizing models](docs/tutorials/customize_models.md), [customizing runtime settings](docs/tutorials/customize_runtime.md) and [useful tools](docs/useful_tools.md).
+
+Please refer to [FAQ](docs/faq.md) for frequently asked questions.
+
+## Contributing
+
+We appreciate all contributions to improve MMDetection. Ongoing projects can be found in out [GitHub Projects](https://github.com/open-mmlab/mmdetection/projects). Welcome community users to participate in these projects. Please refer to [CONTRIBUTING.md](.github/CONTRIBUTING.md) for the contributing guideline.
+
+## Acknowledgement
+
+MMDetection is an open source project that is contributed by researchers and engineers from various colleges and companies. We appreciate all the contributors who implement their methods or add new features, as well as users who give valuable feedbacks.
+We wish that the toolbox and benchmark could serve the growing research community by providing a flexible toolkit to reimplement existing methods and develop their own new detectors.
+
+## Citation
+
+If you use this toolbox or benchmark in your research, please cite this project.
+
 ```
-
-After install the two repos, install timm and einops, i.e.,
-```bash
-pip install timm==0.4.9 einops
-```
-
-Download the pretrained models from [MAE](https://github.com/facebookresearch/mae) or [ViTAE](https://github.com/ViTAE-Transformer/ViTAE-Transformer), and then conduct the experiments by
-
-```bash
-# for single machine
-bash tools/dist_train.sh <Config PATH> <NUM GPUs> --cfg-options model.pretrained=<Pretrained PATH>
-
-# for multiple machines
-python -m torch.distributed.launch --nnodes <Num Machines> --node_rank <Rank of Machine> --nproc_per_node <GPUs Per Machine> --master_addr <Master Addr> --master_port <Master Port> tools/train.py <Config PATH> --cfg-options model.pretrained=<Pretrained PATH> --launcher pytorch
-```
-
-## Todo
-
-This repo current contains modifications including:
-
-- using LN for the convolutions in RPN and heads
-- using large scale jittor for augmentation
-- using RPE from MViT
-- using longer training epochs and 1024 test size
-- using global attention layers
-
-There are other things to do:
-
-- [ ] Implement the conv blocks for global information communication
-
-- [ ] Tune the models for Cascade RCNN 
-
-- [ ] Train ViT models for the LVIS dataset
-
-- [ ] Train ViTAE model with the ViTDet framework
-
-## Acknowledge
-We acknowledge the excellent implementation from [mmdetection](https://github.com/open-mmlab/mmdetection), [MAE](https://github.com/facebookresearch/mae), [MViT](https://github.com/facebookresearch/mvit), and [BeiT](https://github.com/microsoft/unilm/tree/master/beit).
-
-## Citing ViTDet
-```
-@article{Li2022ExploringPV,
-  title={Exploring Plain Vision Transformer Backbones for Object Detection},
-  author={Yanghao Li and Hanzi Mao and Ross B. Girshick and Kaiming He},
-  journal={ArXiv},
-  year={2022},
-  volume={abs/2203.16527}
+@article{mmdetection,
+  title   = {{MMDetection}: Open MMLab Detection Toolbox and Benchmark},
+  author  = {Chen, Kai and Wang, Jiaqi and Pang, Jiangmiao and Cao, Yuhang and
+             Xiong, Yu and Li, Xiaoxiao and Sun, Shuyang and Feng, Wansen and
+             Liu, Ziwei and Xu, Jiarui and Zhang, Zheng and Cheng, Dazhi and
+             Zhu, Chenchen and Cheng, Tianheng and Zhao, Qijie and Li, Buyu and
+             Lu, Xin and Zhu, Rui and Wu, Yue and Dai, Jifeng and Wang, Jingdong
+             and Shi, Jianping and Ouyang, Wanli and Loy, Chen Change and Lin, Dahua},
+  journal= {arXiv preprint arXiv:1906.07155},
+  year={2019}
 }
 ```
 
-For ViTAE and ViTAEv2, please refer to:
-```
-@article{xu2021vitae,
-  title={Vitae: Vision transformer advanced by exploring intrinsic inductive bias},
-  author={Xu, Yufei and Zhang, Qiming and Zhang, Jing and Tao, Dacheng},
-  journal={Advances in Neural Information Processing Systems},
-  volume={34},
-  year={2021}
-}
+## Projects in OpenMMLab
 
-@article{zhang2022vitaev2,
-  title={ViTAEv2: Vision Transformer Advanced by Exploring Inductive Bias for Image Recognition and Beyond},
-  author={Zhang, Qiming and Xu, Yufei and Zhang, Jing and Tao, Dacheng},
-  journal={arXiv preprint arXiv:2202.10108},
-  year={2022}
-}
-```
+- [MMCV](https://github.com/open-mmlab/mmcv): OpenMMLab foundational library for computer vision.
+- [MIM](https://github.com/open-mmlab/mim): MIM Installs OpenMMLab Packages.
+- [MMClassification](https://github.com/open-mmlab/mmclassification): OpenMMLab image classification toolbox and benchmark.
+- [MMDetection](https://github.com/open-mmlab/mmdetection): OpenMMLab detection toolbox and benchmark.
+- [MMDetection3D](https://github.com/open-mmlab/mmdetection3d): OpenMMLab's next-generation platform for general 3D object detection.
+- [MMSegmentation](https://github.com/open-mmlab/mmsegmentation): OpenMMLab semantic segmentation toolbox and benchmark.
+- [MMAction2](https://github.com/open-mmlab/mmaction2): OpenMMLab's next-generation action understanding toolbox and benchmark.
+- [MMTracking](https://github.com/open-mmlab/mmtracking): OpenMMLab video perception toolbox and benchmark.
+- [MMPose](https://github.com/open-mmlab/mmpose): OpenMMLab pose estimation toolbox and benchmark.
+- [MMEditing](https://github.com/open-mmlab/mmediting): OpenMMLab image and video editing toolbox.
+- [MMOCR](https://github.com/open-mmlab/mmocr): A Comprehensive Toolbox for Text Detection, Recognition and Understanding.
+- [MMGeneration](https://github.com/open-mmlab/mmgeneration): OpenMMLab image and video generative models toolbox.

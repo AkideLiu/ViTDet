@@ -79,9 +79,6 @@ def train_detector(model,
         find_unused_parameters = cfg.get('find_unused_parameters', False)
         # Sets the `find_unused_parameters` parameter in
         # torch.nn.parallel.DistributedDataParallel
-        syncBN = cfg.get('syncBN', False)
-        if syncBN:
-            model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model).cuda()
         model = MMDistributedDataParallel(
             model.cuda(),
             device_ids=[torch.cuda.current_device()],

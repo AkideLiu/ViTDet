@@ -15,14 +15,10 @@ from .resnext import ResNeXt
 from .ssd_vgg import SSDVGG
 from .swin import SwinTransformer
 from .trident_resnet import TridentResNet
-from .vit import ViT
-from .vitae import ViTAE
-from .vitae_s import ViTAE_S
 
 __all__ = [
     'RegNet', 'ResNet', 'ResNetV1d', 'ResNeXt', 'SSDVGG', 'HRNet',
     'MobileNetV2', 'Res2Net', 'HourglassNet', 'DetectoRS_ResNet',
     'DetectoRS_ResNeXt', 'Darknet', 'ResNeSt', 'TridentResNet', 'CSPDarknet',
-    'SwinTransformer', 'PyramidVisionTransformer', 'PyramidVisionTransformerV2',
-    'ViT', 'ViTAE', 'ViTAE_S'
+    'SwinTransformer', 'PyramidVisionTransformer', 'PyramidVisionTransformerV2'
 ]
